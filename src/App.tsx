@@ -10,14 +10,10 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button onClick={()=>{fetch('http://localhost:7472/api/v1/effects/preset/a62e08df-c863-404c-b0c0-379f3bb75e0c')}}
+         
         >
-          Learn React
-        </a>
+test this!        </button>
       </header>
     </div>
   );
