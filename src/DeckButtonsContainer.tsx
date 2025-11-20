@@ -14,7 +14,7 @@ interface IDeckButtonsContainerProps{
 
 export const DeckButtonsContainer:React.FC<IDeckButtonsContainerProps> = (props) => {
     
-    return <div>
+    return <ContainingDiv>
         {props.buttons.map((button, index) => (
         <DeckButton 
             key={index}
@@ -25,5 +25,10 @@ export const DeckButtonsContainer:React.FC<IDeckButtonsContainerProps> = (props)
             ipAddress={props.ipAddress}
             port={props.port}
         />))}
-    </div>
+    </ContainingDiv>
 }
+
+const ContainingDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`

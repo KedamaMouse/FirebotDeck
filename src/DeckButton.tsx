@@ -29,4 +29,6 @@ export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
 const Button = styled.button`
     font-size: 50px;
     border-radius: 5px;
+    margin: 5px;
+
 `

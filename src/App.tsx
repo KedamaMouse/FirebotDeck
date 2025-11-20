@@ -38,7 +38,7 @@ function App() {
                   caption: effect.name,
                   firebotKey: effect.id,
                         textColor: "white",
-                   backgroundColor: "blue",
+                   backgroundColor: "#790981",
 
                 })
               }
@@ -61,7 +61,7 @@ function App() {
 }
 
 const Container =styled.div`
-background-color: black;
+background-color: #2a2a2a;
 height: 100%;
 `
 
