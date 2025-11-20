@@ -61,6 +61,8 @@ function App() {
       <DeckButtonsContainer buttons={buttons} ipAddress={ipAddress} port={port} />
       {buttons.length===0 ? <Instructions/> : null}
       <input type='file' title='Import' onChange={importConfig} />
+      <label>IP Address for requests: </label>
+      <input type="text" value={ipAddress} onChange={(event)=> setIPAddress(event.target.value)}/>
     </Container>
 
   );
