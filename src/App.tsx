@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from "styled-components";
 
 import { DeckButtonsContainer } from './DeckButtonsContainer';
+import { Instructions } from './Instructions';
 
 export interface IDeckButton {
   firebotKey: string;
@@ -58,6 +59,7 @@ function App() {
   return (
     <Container >
       <DeckButtonsContainer buttons={buttons} ipAddress={ipAddress} port={port} />
+      {buttons.length===0 ? <Instructions/> : null}
       <input type='file' title='Import' onChange={importConfig} />
     </Container>
 
@@ -66,6 +68,7 @@ function App() {
 
 const Container = styled.div`
   background-color: #2a2a2a;
+  color: white;
   height: 100%;
 `
 
