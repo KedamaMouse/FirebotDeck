@@ -13,7 +13,14 @@ interface IDeckButtonProps
 
 export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
     const onclick= () => {
-    fetch('http://'+props.ipAddress+':'+props.port+'/api/v1/effects/preset/' + props.actionID);
+        const url ='http://'+props.ipAddress+':'+props.port+'/api/v1/effects/preset/' + props.actionID;
+        try {
+              fetch(url);
+        } catch (error) {
+            alert("action failed: "+url);
+        }
+           
+       
     }
     return <Button style={{color: props.textColor, backgroundColor: props.backgroundColor}} onClick={onclick} >{props.caption}</Button>
 
