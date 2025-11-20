@@ -12,12 +12,12 @@ interface IDeckButtonProps
 }
 
 export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
-    const onclick= () => {
+    const onclick= async () => {
         const url ='http://'+props.ipAddress+':'+props.port+'/api/v1/effects/preset/' + props.actionID;
         try {
-              fetch(url);
+              await fetch(url);
         } catch (error) {
-            alert("action failed: "+url);
+            alert("request failed. is firebot running? Request: "+url);
         }
            
        
