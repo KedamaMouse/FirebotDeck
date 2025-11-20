@@ -1,68 +1,72 @@
 import React from 'react';
-import styled,{ css } from "styled-components";
+import styled, { css } from "styled-components";
 
 import { DeckButtonsContainer } from './DeckButtonsContainer';
 
-export interface IDeckButton
-{
-    firebotKey: string;
-    caption: string;
-    textColor: string;
-    backgroundColor: string;
+export interface IDeckButton {
+  firebotKey: string;
+  caption: string;
+  textColor: string;
+  backgroundColor: string;
 }
 
 function App() {
- 
+
   const [buttons, setButtons] = React.useState<IDeckButton[]>([]);
   const [ipAddress, setIPAddress] = React.useState<string>("localHost");
-  const [port,setPort] =React.useState<string>("7472");
+  const [port, setPort] = React.useState<string>("7472");
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     //this is where we'll read from browser storage for existing values.
-    setButtons([]);
-  },[]);
+    const buttonjson = window.localStorage.getItem("buttons");
 
-  const importConfig:React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    
-    if(!event.target.files){return};
+    if (buttonjson) {
+      const buttons = JSON.parse(buttonjson);
+      setButtons(buttons);
+    }
+
+  }, []);
+
+  const importConfig: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+
+    if (!event.target.files) { return };
     const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if(e.target){
-          const json= JSON.parse(e.target.result as string);
-          if(json.components && json.components.presetEffectLists){
-            const buttons: IDeckButton[] = [];
-            for(const effect of json.components.presetEffectLists)
-              {
-                buttons.push({
-                  caption: effect.name,
-                  firebotKey: effect.id,
-                        textColor: "white",
-                   backgroundColor: "#790981",
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target) {
+        const json = JSON.parse(e.target.result as string);
+        if (json.components && json.components.presetEffectLists) {
+          const buttons: IDeckButton[] = [];
+          for (const effect of json.components.presetEffectLists) {
+            buttons.push({
+              caption: effect.name,
+              firebotKey: effect.id,
+              textColor: "white",
+              backgroundColor: "#790981",
 
-                })
-              }
-              setButtons(buttons);
-
+            })
           }
+          setButtons(buttons);
+          window.localStorage.setItem("buttons", JSON.stringify(buttons));
         }
+      }
 
-      };
-      reader.readAsText(file);
+    };
+    reader.readAsText(file);
   }
 
   return (
     <Container >
-      <DeckButtonsContainer buttons={buttons}  ipAddress={ipAddress} port={port}  />
+      <DeckButtonsContainer buttons={buttons} ipAddress={ipAddress} port={port} />
       <input type='file' title='Import' onChange={importConfig} />
     </Container>
-  
+
   );
 }
 
-const Container =styled.div`
-background-color: #2a2a2a;
-height: 100%;
+const Container = styled.div`
+  background-color: #2a2a2a;
+  height: 100%;
 `
 
 export default App;
