@@ -10,7 +10,8 @@ interface IDeckButtonProps
     baseApiURL: string;
     backgroundColor: string;
     textColor: string;
-    removeButtonHandler:(firebotKey: string) => void;
+    removeButtonHandler:() => void;
+    afterActionHandler: () => void; 
 }
 
 export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
@@ -18,6 +19,7 @@ export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
         const url =props.baseApiURL + '/effects/preset/' + props.actionID;
         try {
               await fetch(url);
+              props.afterActionHandler();
         } catch (error) {
             alert("request failed. is firebot running? Request: "+ url);
         }
@@ -34,7 +36,7 @@ export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
 
         </ContextMenuPortal>
         <ContextMenuContent>
-        <ContextMenuItem onClick={() => props.removeButtonHandler(props.actionID)}>
+        <ContextMenuItem onClick={() => props.removeButtonHandler()}>
             <ContextMenuItemDiv>Remove Button</ContextMenuItemDiv>
         </ContextMenuItem>
         </ContextMenuContent>

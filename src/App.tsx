@@ -6,10 +6,10 @@ import { Instructions } from './Instructions';
 
 export interface IDeckButton {
   firebotKey: string;
-  
   caption: string;
   textColor: string;
   backgroundColor: string;
+  backColorVariable: string;
 }
 
 interface IFireBotEffect{
@@ -25,15 +25,32 @@ function App() {
   const baseApiURL = 'http://'+ipAddress+':'+port+'/api/v1/';
   const [effectList, setEffectList] = React.useState<IFireBotEffect[]>([]);
 
-  const pullFirebotData = async () => 
+  const pullFirebotEffects = async () => 
   {
     try {
       const effects =await (await fetch(baseApiURL + "effects/preset")).json(); 
       setEffectList(effects);
-    } catch (error) {
-      
+    } catch (error) { 
     }
+  }
 
+  const updateButtonColors = async () => {
+       try {
+        let updated= false;
+        for(const button of buttons){
+          const updatedColor= await (await fetch(baseApiURL + "custom-variables/" +button.backColorVariable)).json();
+          if(updatedColor && button.backgroundColor != updatedColor){
+            button.backgroundColor= updatedColor;
+            updated=true;
+          }
+        }
+        if(updated){
+          setButtons(buttons.splice(0,buttons.length));
+        }
+
+       }
+       catch (error) { 
+      }
   }
 
   const saveState= () =>{
@@ -60,7 +77,8 @@ function App() {
   React.useEffect(()=> {
     if(ipAddress !=="") { 
       saveState();
-      pullFirebotData();
+      pullFirebotEffects();
+      updateButtonColors();
     }
   },[ipAddress,buttons]);
 
@@ -81,6 +99,7 @@ function App() {
           firebotKey: neweffect.id,
           textColor: "white",
           backgroundColor: "#790981",
+          backColorVariable: (neweffect.name + " deckbuttoncolor"),
         });
       }
       setButtons(buttons.splice(0,buttons.length));
@@ -88,7 +107,7 @@ function App() {
 
   return (
     <Container >
-      <DeckButtonsContainer buttons={buttons} baseApiURL={baseApiURL} removeButtonHandler={removeButtonHandler} />
+      <DeckButtonsContainer buttons={buttons} baseApiURL={baseApiURL} removeButtonHandler={removeButtonHandler} afterActionHandler={updateButtonColors}/>
       {buttons.length===0 ? <Instructions/> : null}
       <label>IP Address for requests: </label>
       <input type="text" value={ipAddress} onChange={(event)=> {setIPAddress(event.target.value); }}/>
