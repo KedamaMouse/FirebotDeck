@@ -8,7 +8,7 @@ import { DeckButton } from './DeckButton';
 interface IDeckButtonsContainerProps{
     buttons: IDeckButton[];
     baseApiURL: string;
-    port: string;
+    removeButtonHandler:(firebotKey: string) => void;
 
 }
 
@@ -23,7 +23,7 @@ export const DeckButtonsContainer:React.FC<IDeckButtonsContainerProps> = (props)
             caption={button.caption}
             textColor={button.textColor}
             baseApiURL={props.baseApiURL}
-            port={props.port}
+            removeButtonHandler={props.removeButtonHandler}
         />))}
     </ContainingDiv>
 }

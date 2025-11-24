@@ -1,14 +1,16 @@
-import * as React from 'react';
+
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuPortal, ContextMenuTrigger } from "@radix-ui/react-context-menu";
 import styled,{ css } from "styled-components";
+
 
 interface IDeckButtonProps
 {
     caption : string;
     actionID: string;
     baseApiURL: string;
-    port: string;
     backgroundColor: string;
     textColor: string;
+    removeButtonHandler:(firebotKey: string) => void;
 }
 
 export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
@@ -17,14 +19,39 @@ export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
         try {
               await fetch(url);
         } catch (error) {
-            alert("request failed. is firebot running? Request: "+url);
+            alert("request failed. is firebot running? Request: "+ url);
         }
            
        
     }
-    return <Button style={{color: props.textColor, backgroundColor: props.backgroundColor}} onClick={onclick} >{props.caption}</Button>
+    return <>
+    <ContextMenu>
+    <ContextMenuTrigger>
+
+        <Button style={{color: props.textColor, backgroundColor: props.backgroundColor}} onClick={onclick} >{props.caption}</Button>
+    </ContextMenuTrigger>
+        <ContextMenuPortal>
+
+        </ContextMenuPortal>
+        <ContextMenuContent>
+        <ContextMenuItem onClick={() => props.removeButtonHandler(props.actionID)}>
+            <ContextMenuItemDiv>Remove Button</ContextMenuItemDiv>
+        </ContextMenuItem>
+        </ContextMenuContent>
+
+    </ContextMenu>
+    </>
 
 }
+
+const ContextMenuItemDiv= styled.div`
+    background-color: white;
+    color: black;
+    :hover
+    {
+        background-color: #e094d2;
+    }
+`
 
 const Button = styled.button`
     font-size: 50px;
