@@ -1,6 +1,7 @@
 
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuPortal, ContextMenuTrigger } from "@radix-ui/react-context-menu";
 import styled,{ css } from "styled-components";
+import { IDeckButton } from "./App";
 
 
 interface IDeckButtonProps
@@ -12,6 +13,8 @@ interface IDeckButtonProps
     textColor: string;
     removeButtonHandler:() => void;
     afterActionHandler: () => void; 
+    updateButtonProps: (props: Partial<IDeckButton>) => void;
+    backColorVariable: string;
 }
 
 export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
@@ -39,6 +42,17 @@ export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
         <ContextMenuItem onClick={() => props.removeButtonHandler()}>
             <ContextMenuItemDiv>Remove Button</ContextMenuItemDiv>
         </ContextMenuItem>
+
+        <ContextMenuItem onClick={() => {
+            const variable=prompt("Firebot custom variable name to look to. current value: '"+props.backColorVariable+"'");
+            if(variable){
+                props.updateButtonProps({backColorVariable: variable})
+            }
+        }
+        }>
+            <ContextMenuItemDiv>set color variable</ContextMenuItemDiv>
+        </ContextMenuItem>
+
         </ContextMenuContent>
 
     </ContextMenu>

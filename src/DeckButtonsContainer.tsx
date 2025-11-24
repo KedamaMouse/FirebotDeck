@@ -10,6 +10,7 @@ interface IDeckButtonsContainerProps{
     baseApiURL: string;
     removeButtonHandler:(firebotKey: string) => void;
     afterActionHandler: () => void;
+    updateButtonProps: (firebotKey: string, props: Partial<IDeckButton>) => void;
 }
 
 export const DeckButtonsContainer:React.FC<IDeckButtonsContainerProps> = (props) => {
@@ -25,6 +26,8 @@ export const DeckButtonsContainer:React.FC<IDeckButtonsContainerProps> = (props)
             baseApiURL={props.baseApiURL}
             removeButtonHandler={props.removeButtonHandler.bind(undefined,button.firebotKey)}
             afterActionHandler={props.afterActionHandler}
+            updateButtonProps={props.updateButtonProps.bind(undefined,button.firebotKey)}
+            backColorVariable={button.backColorVariable}
         />))}
     </ContainingDiv>
 }

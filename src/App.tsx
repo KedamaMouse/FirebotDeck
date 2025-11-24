@@ -90,6 +90,14 @@ function App() {
     setButtons(buttons.splice(0,buttons.length));
   }
 
+  const updateButtonProps=(firebotKey: string, props: Partial<IDeckButton>) => {
+    const buttonindex = buttons.findIndex((button)=>{if(button.firebotKey===firebotKey){return true;} })
+    if(buttonindex >= 0){
+      buttons[buttonindex]= {...buttons[buttonindex],...props};
+      setButtons(buttons.splice(0,buttons.length));
+    }
+  }
+
   const newEffectSelectedHandler: React.ChangeEventHandler<HTMLSelectElement> = (event): void=>{
       const neweffect=effectList.find((effect)=>{if(effect.id === event.target.value){ return true;}});  
 
@@ -107,7 +115,8 @@ function App() {
 
   return (
     <Container >
-      <DeckButtonsContainer buttons={buttons} baseApiURL={baseApiURL} removeButtonHandler={removeButtonHandler} afterActionHandler={updateButtonColors}/>
+      <DeckButtonsContainer buttons={buttons} baseApiURL={baseApiURL} removeButtonHandler={removeButtonHandler} 
+      afterActionHandler={updateButtonColors} updateButtonProps={updateButtonProps}/>
       {buttons.length===0 ? <Instructions/> : null}
       <label>IP Address for requests: </label>
       <input type="text" value={ipAddress} onChange={(event)=> {setIPAddress(event.target.value); }}/>
