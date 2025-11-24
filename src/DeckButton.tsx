@@ -46,11 +46,21 @@ export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
         <ContextMenuItem onClick={() => {
             const variable=prompt("Firebot custom variable name to look to. current value: '"+props.backColorVariable+"'");
             if(variable){
-                props.updateButtonProps({backColorVariable: variable})
+                props.updateButtonProps({backColorVariable: variable});
             }
         }
         }>
             <ContextMenuItemDiv>set color variable</ContextMenuItemDiv>
+        </ContextMenuItem>
+        
+        <ContextMenuItem onClick={() => {
+            const color=prompt("Enter an html color code");
+            if(color){
+                props.updateButtonProps({backgroundColor: color});
+            }
+        }
+        }>
+            <ContextMenuItemDiv>set color</ContextMenuItemDiv>
         </ContextMenuItem>
 
         </ContextMenuContent>
