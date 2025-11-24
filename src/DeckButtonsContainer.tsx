@@ -7,7 +7,7 @@ import { DeckButton } from './DeckButton';
 
 interface IDeckButtonsContainerProps{
     buttons: IDeckButton[];
-    ipAddress: string;
+    baseApiURL: string;
     port: string;
 
 }
@@ -22,7 +22,7 @@ export const DeckButtonsContainer:React.FC<IDeckButtonsContainerProps> = (props)
             backgroundColor={button.backgroundColor} 
             caption={button.caption}
             textColor={button.textColor}
-            ipAddress={props.ipAddress}
+            baseApiURL={props.baseApiURL}
             port={props.port}
         />))}
     </ContainingDiv>

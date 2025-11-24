@@ -6,6 +6,7 @@ import { Instructions } from './Instructions';
 
 export interface IDeckButton {
   firebotKey: string;
+  
   caption: string;
   textColor: string;
   backgroundColor: string;
@@ -16,6 +17,7 @@ function App() {
   const [buttons, setButtons] = React.useState<IDeckButton[]>([]);
   const [ipAddress, setIPAddress] = React.useState<string>("localHost");
   const [port, setPort] = React.useState<string>("7472");
+  const baseApiURL = 'http://'+ipAddress+':'+port+'/api/v1/';
 
   React.useEffect(() => {
     //this is where we'll read from browser storage for existing values.
@@ -58,7 +60,7 @@ function App() {
 
   return (
     <Container >
-      <DeckButtonsContainer buttons={buttons} ipAddress={ipAddress} port={port} />
+      <DeckButtonsContainer buttons={buttons} baseApiURL={baseApiURL} port={port} />
       {buttons.length===0 ? <Instructions/> : null}
       <input type='file' title='Import' onChange={importConfig} />
       <label>IP Address for requests: </label>
