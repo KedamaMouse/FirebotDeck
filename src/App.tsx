@@ -87,7 +87,6 @@ function App() {
   }
 
   React.useEffect(() => {
-    //this is where we'll read from browser storage for existing values.
     const buttonjson = window.localStorage.getItem("buttons");
     const ipForRequests = window.localStorage.getItem("ipForRequests");
     if (ipForRequests) {
