@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled, { css } from "styled-components";
 
 import { DeckButtonsContainer } from './DeckButtonsContainer';
@@ -28,7 +28,7 @@ function App() {
   //Note we never set the request state because its purpose is to carry data accross timers in a way that doesn't play well with react state.
   const [requestState, setRequestState] = React.useState<{requestNumber: number,lastSuccessfulRequest: number}>({requestNumber: 0, lastSuccessfulRequest: 0});
 
-  const pullFirebotEffects = async () => {
+  const pullFirebotEffects = useCallback( async () => {
       requestState.requestNumber++;
       const requestNumber = requestState.requestNumber;
     try {
@@ -42,9 +42,9 @@ function App() {
         setFailedRequestURL(baseApiURL);
       }
     }
-  }
+  },[baseApiURL,requestState]);
 
-  const updateButtonColors = async () => {
+  const updateButtonColors = useCallback(async () => {
     try {
       let updated = false;
       for (const button of buttons) {
@@ -59,7 +59,7 @@ function App() {
       }
     } catch (error) { }
 
-  }
+  },[buttons, baseApiURL]);
 
   useEffect(() => {
 
@@ -77,7 +77,7 @@ function App() {
       }
 
     }
-  }, [failedRequestURL, ipAddress]);
+  }, [failedRequestURL, ipAddress, pullFirebotEffects,updateButtonColors]);
 
 
 
