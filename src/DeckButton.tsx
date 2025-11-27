@@ -73,7 +73,7 @@ export const DeckButton:React.FC<IDeckButtonProps> = (props) => {
 const ContextMenuItemDiv= styled.div`
     background-color: white;
     color: black;
-    :hover
+    &:hover
     {
         background-color: #e094d2;
     }
