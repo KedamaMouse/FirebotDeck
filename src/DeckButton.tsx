@@ -18,7 +18,7 @@ interface IDeckButtonProps {
 
 export const DeckButton: React.FC<IDeckButtonProps> = (props) => {
     const onclick = async () => {
-        const url = props.baseApiURL + '/effects/preset/' + props.actionID;
+        const url = props.baseApiURL + 'effects/preset/' + props.actionID;
         try {
             await fetch(url);
             props.afterActionHandler();
